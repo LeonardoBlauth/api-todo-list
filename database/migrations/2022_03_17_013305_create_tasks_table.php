@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('category');
 
             $table->integer('status')
-                ->default('new');
+                ->default(0);
 
             $table->date('start_date')
                 ->nullable(false);
