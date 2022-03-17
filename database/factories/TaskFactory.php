@@ -4,20 +4,19 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
- */
 class TaskFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition()
+    protected $model = Task::class;
+
+    public function definition(): array
     {
         return [
-            //
+            'task' => $this->faker->sentence(),
+            'category' => $this->faker->randomElements(['Home', 'School', 'Health', 'Leisure'], 1, true),
+            'status' => $this->faker->randomElements([0, 1, 2, 3, 4, 5, 6], 1, true),
+            'start_date' => $this->faker->date('Y-m-d', 'now'),
+            'end_date' => $this->faker->dateTimeBetween('now', '+2 years'),
+            'state' => $this->faker->boolean(35),
         ];
     }
 }
