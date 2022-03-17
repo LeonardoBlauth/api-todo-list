@@ -9,14 +9,14 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class TaskController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $validFields = Task::class()->getFillable();
+        $validFields = Task::make()->getFillable();
 
-        $resource = QueryBuilder::for(Task::class())
+        $resource = QueryBuilder::for(Task::make())
             ->allowedFields($validFields)
             ->allowedFilters($validFields)
-            ->allowedSort($validFields)
+            ->allowedSorts($validFields)
             ->get();
 
         return response()
@@ -30,20 +30,18 @@ class TaskController extends Controller
     {
         return response()
             ->json(
-                Task::create($request),
+                Task::create($request->toArray()),
                 201
             );
     }
 
     public function show($id): JsonResponse
     {
-        $validFields = Task::class()->getFillable();
+        $validFields = Task::make()->getFillable();
 
-        $resource = QueryBuilder::for(Task::class())
+        $resource = QueryBuilder::for(Task::make())
             ->where('id', $id)
             ->allowedFields($validFields)
-            ->allowedFilters($validFields)
-            ->allowedSort($validFields)
             ->get();
 
         return is_null($resource)
@@ -64,6 +62,8 @@ class TaskController extends Controller
     public function update(Request $request, $id): JsonResponse
     {
         $resource = Task::findOrFail($id);
+
+        $resource->fill($request->toArray());
         $resource->save();
 
         return response()
