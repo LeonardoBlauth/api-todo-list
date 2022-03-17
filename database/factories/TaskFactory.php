@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Task;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TaskFactory extends Factory
@@ -12,8 +13,8 @@ class TaskFactory extends Factory
     {
         return [
             'task' => $this->faker->sentence(),
-            'category' => $this->faker->randomElements(['Home', 'School', 'Health', 'Leisure'], 1, true),
-            'status' => $this->faker->randomElements([0, 1, 2, 3, 4, 5, 6], 1, true),
+            'category' => $this->faker->word(),
+            'status' => $this->faker->randomDigit(),
             'start_date' => $this->faker->date('Y-m-d', 'now'),
             'end_date' => $this->faker->dateTimeBetween('now', '+2 years'),
             'state' => $this->faker->boolean(35),
